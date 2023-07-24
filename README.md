@@ -1,6 +1,6 @@
 # Git Useful Commands
 
-Some useful git commands.
+Some useful git commands written in bash scripts.
 
 Add them to a path folder to use them.
 
