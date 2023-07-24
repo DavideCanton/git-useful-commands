@@ -4,7 +4,12 @@ cur=`git branch --show-current`
 git branch -l --format "%(refname:lstrip=2) %(upstream:lstrip=3) %(upstream:remotename) %(upstream:track)" | {
 	while read -r lb rb rn tr; do
 	    if [ $lb == $cur ]; then
-        	continue
+			if [[ $tr == *"behind"* ]]; then
+				echo "Pulling changes into $cur"
+				git pull -n
+				let u=$u+1
+			fi
+			continue
 	    fi
 	    if [ ! -z $rb ] && [ ! -z $rn ] && [[ $tr == *"behind"* ]]; then
 	        git fetch $rn $lb:$rb
