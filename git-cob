@@ -15,35 +15,35 @@ fi
 cnt=$(echo $br | wc -w)
 
 case $cnt in
+0)
+    echo "No match found, searching on remote branches..."
+    br=$(git branch -r --format="%(refname:lstrip=3)" | grep -i "$inp")
+    cnt=$(echo $br | wc -w)
+    case $cnt in
     0)
-        echo "No match found, searching on remote branches..."
-        br=$(git branch -r --format="%(refname:lstrip=3)" | grep -i "$inp")
-        cnt=$(echo $br | wc -w)
-        case $cnt in
-            0)
-                echo "No match found"
-                exit 1
-                ;;
-            1)
-                git checkout $br -q
-                ;;
-            *)
-                echo "Found $cnt remote matches"
-                for w in $br; do
-                    echo $w
-                done
-                exit 2
-                ;;
-        esac
+        echo "No match found"
+        exit 1
         ;;
     1)
         git checkout $br -q
         ;;
     *)
-        echo "Found $cnt matches"
+        echo "Found $cnt remote matches"
         for w in $br; do
             echo $w
         done
         exit 2
         ;;
+    esac
+    ;;
+1)
+    git checkout $br -q
+    ;;
+*)
+    echo "Found $cnt matches"
+    for w in $br; do
+        echo $w
+    done
+    exit 2
+    ;;
 esac

@@ -1,7 +1,7 @@
 #! /bin/bash
 set -eu
 git fetch --prune
-git branch -l --format "%(refname:lstrip=2) %(upstream:track)" | while read -r br tr ; do
+git branch -l --format "%(refname:lstrip=2) %(upstream:track)" | while read -r br tr; do
     if [ "$tr" == "[gone]" ]; then
         echo "Removing $br..."
         git branch -D $br
